@@ -9,6 +9,7 @@ output: html_document
 knitr::opts_chunk$set(echo = FALSE)
 library(tidyverse)
 library(fivethirtyeight)
+library(ggthemes)
 ```
 
 ```{r}
@@ -25,6 +26,9 @@ congress_age %>%
   scale_x_discrete(breaks = c(1950, 1960, 1970, 1980, 1990, 2000, 2010), labels = c("1950", "'60", "'70", "'80", "'90", "2000", "'10")) +
   labs(title = "Average Age of Members of Congress by Party",
        subtitle = "At start of term, 1947-2013",
-       source = "538 R Package")
+       source = "538 R Package") +
+  theme_fivethirtyeight() +
+  scale_color_fivethirtyeight()
+
 ```
 
