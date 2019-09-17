@@ -6,6 +6,25 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = FALSE)
+library(tidyverse)
+library(fivethirtyeight)
+```
+
+```{r}
+data("congress_age")
+
+congress_age %>%
+  mutate(year = format(termstart, "%Y")) %>%
+  select(party, age, year) %>%
+  group_by(party, year) %>%
+  filter(party %in% c("R", "D")) %>%
+  summarise(AvgAge = mean(age)) %>%
+  ggplot(aes(x = year, y = AvgAge, group = party, color = party)) + geom_point(alpha = 0) +
+  geom_line() +
+  scale_x_discrete(breaks = c(1950, 1960, 1970, 1980, 1990, 2000, 2010), labels = c("1950", "'60", "'70", "'80", "'90", "2000", "'10")) +
+  labs(title = "Average Age of Members of Congress by Party",
+       subtitle = "At start of term, 1947-2013",
+       source = "538 R Package")
 ```
 
